@@ -1,0 +1,8 @@
+.hidden {
+    display: none;
+}
+
+.not-active {
+    pointer-events: none;
+    cursor: none;
+}
