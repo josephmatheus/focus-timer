@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Focus Timer</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-<body>
-    <div class="timer">
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <main class="timer-container">
+      <div class="timer">
         <p class="time">
-            <span class="minutos"></span>
-            :
-            <span class="segundos"></span>
+          <span class="minutos"></span>
+          :
+          <span class="segundos"></span>
         </p>
-    </div>
-    <div class="botoes">
-        <button id="botao-play">play</button>
-        <button id="botao-pause" class="hidden">pause</button>
-        <button id="botao-stop">stop</button>
-        <button id="botao-mais">+</button>
-        <button id="botao-menos">-</button>
-    </div>
+      </div>
+      <div class="botoes">
+        <button id="botao-mais" class="botao">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button id="botao-play" class="botao">
+            <i class="fas fa-play"></i>
+        </button>
+        <button id="botao-pause" class="botao hidden">
+            <i class="fas fa-pause"></i>
+        </button>
+        <button id="botao-stop" class="botao">
+            <i class="fas fa-stop"></i>
+        </button>
+        <button id="botao-menos" class="botao">
+            <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </main>
     <script type="module" src="./assets/js/index.js"></script>
-</body>
+  </body>
 </html>
