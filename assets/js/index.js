@@ -8,6 +8,7 @@ const botaoMenos = document.getElementById("botao-menos");
 
 const focusSound = new Audio("./assets/sounds/focus-sound.mp3")
 focusSound.loop = true
+focusSound.volume = 0.2
 
 const timerStartSound = new Audio("./assets/sounds/timer-start.mp3")
 const timerEndSound = new Audio("./assets/sounds/timer-ends.mp3")
