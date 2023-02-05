@@ -17,8 +17,8 @@ let interval;
 
 const focusTimer = {
   workTime: {
-    minutes: 0,
-    seconds: 3,
+    minutes: 25,
+    seconds: 0,
   },
 
   addMinutes() {
