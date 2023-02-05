@@ -1,96 +1,98 @@
-const minutos = document.querySelector(".minutos");
-const segundos = document.querySelector(".segundos");
-const botaoPlay = document.getElementById("botao-play");
-const botaoPause = document.getElementById("botao-pause");
-const botaoStop = document.getElementById("botao-stop");
-const botaoMais = document.getElementById("botao-mais");
-const botaoMenos = document.getElementById("botao-menos");
+const minutes = document.querySelector(".minutes");
+const seconds = document.querySelector(".seconds");
+const playBtn = document.getElementById("play-btn");
+const pauseBtn = document.getElementById("pause-btn");
+const stopBtn = document.getElementById("stop-btn");
+const plusBtn = document.getElementById("plus-btn");
+const minusBtn = document.getElementById("minus-btn");
 
 const focusSound = new Audio("./assets/sounds/focus-sound.mp3")
 focusSound.loop = true
-focusSound.volume = 0.2
+focusSound.volume = 0.5
 
 const timerStartSound = new Audio("./assets/sounds/timer-start.mp3")
 const timerEndSound = new Audio("./assets/sounds/timer-ends.mp3")
 
-let intervalo;
+let interval;
 
 const focusTimer = {
-  minutos: 0,
-  segundos: 10,
-
-  adicionaMinutos() {
-    if (this.minutos == 60) {
-      return;
-    } else {
-      this.minutos += 5;
-    }
-    return this.minutos;
+  workTime: {
+    minutes: 0,
+    seconds: 3,
   },
 
-  subtraiMinutos() {
-    if (this.minutos == 0) {
+  addMinutes() {
+    if (this.workTime.minutes == 60) {
       return;
     } else {
-      this.minutos -= 5;
+      this.workTime.minutes += 5;
     }
-    return this.minutos;
+    return this.workTime.minutes;
   },
 
-  temporizador() {
-    if (this.segundos == 0) {
-      this.segundos = 60;
-      this.minutos--;
+  removeMinutes() {
+    if (this.workTime.minutes == 0) {
+      return;
+    } else {
+      this.workTime.minutes -= 5;
     }
-    this.segundos--;
+    return this.workTime.minutes;
+  },
+
+  countdown() {
+    if (this.workTime.seconds == 0) {
+      this.workTime.seconds = 60;
+      this.workTime.minutes--;
+    }
+    this.workTime.seconds--;
   },
 };
 
 function updateTimer() {
-  minutos.innerHTML = focusTimer.minutos.toString().padStart("2", 0);
-  segundos.innerHTML = focusTimer.segundos.toString().padStart("2", 0);
+  minutes.innerHTML = focusTimer.workTime.minutes.toString().padStart("2", 0);
+  seconds.innerHTML = focusTimer.workTime.seconds.toString().padStart("2", 0);
 }
 
-botaoMais.addEventListener("click", () => {
-  focusTimer.adicionaMinutos();
+plusBtn.addEventListener("click", () => {
+  focusTimer.addMinutes();
   updateTimer();
 });
 
-botaoMenos.addEventListener("click", () => {
-  focusTimer.subtraiMinutos();
+minusBtn.addEventListener("click", () => {
+  focusTimer.removeMinutes();
   updateTimer();
 });
 
-botaoPlay.addEventListener("click", () => {
-  botaoPause.classList.remove("hidden");
-  botaoPlay.classList.add("hidden");
-  botaoMais.classList.add("not-active");
-  botaoMenos.classList.add("not-active");
+playBtn.addEventListener("click", () => {
+  pauseBtn.classList.remove("hidden");
+  playBtn.classList.add("hidden");
+  plusBtn.classList.add("not-active");
+  minusBtn.classList.add("not-active");
   timerStartSound.play()
-  contagemRegressiva();
+  countdown();
   focusSound.play()
 });
 
-botaoPause.addEventListener("click", () => {
-  botaoPause.classList.toggle("hidden");
-  botaoPlay.classList.toggle("hidden");
-  clearTimeout(intervalo);
+pauseBtn.addEventListener("click", () => {
+  pauseBtn.classList.toggle("hidden");
+  playBtn.classList.toggle("hidden");
+  clearTimeout(interval);
   focusSound.pause()
 });
 
-botaoStop.addEventListener("click", () => {
-  botaoPause.classList.add("hidden");
-  botaoPlay.classList.remove("hidden");
-  botaoMais.classList.remove("not-active");
-  botaoMenos.classList.remove("not-active");
+stopBtn.addEventListener("click", () => {
+  pauseBtn.classList.add("hidden");
+  playBtn.classList.remove("hidden");
+  plusBtn.classList.remove("not-active");
+  minusBtn.classList.remove("not-active");
   setTimeToZero()
   stopFocusSound()
   updateTimer();
 });
 
 function setTimeToZero() {
-  focusTimer.minutos = 0;
-  focusTimer.segundos = 0;
+  focusTimer.workTime.minutes = 0;
+  focusTimer.workTime.seconds = 0;
 }
 
 function stopFocusSound() {
@@ -98,25 +100,30 @@ function stopFocusSound() {
   focusSound.currentTime = 0
 }
 
-function contagemRegressiva() {
-  intervalo = setTimeout(() => {
-    let timerZerado = focusTimer.minutos <= 0 && focusTimer.segundos <= 0;
+function timesOver(){
+  playBtn.classList.remove("hidden");
+  pauseBtn.classList.add("hidden");
+  plusBtn.classList.remove("not-active");
+  minusBtn.classList.remove("not-active");
+  stopFocusSound()
+  timerEndSound.play()
+}
+
+function countdown() {
+  interval = setTimeout(() => {
+    let timeOver = focusTimer.workTime.minutes <= 0 && focusTimer.workTime.seconds <= 0;
 
     updateTimer();
-    if (timerZerado) {
-      botaoPlay.classList.remove("hidden");
-      botaoPause.classList.add("hidden");
-      botaoMais.classList.remove("not-active");
-      botaoMenos.classList.remove("not-active");
-      stopFocusSound()
-      timerEndSound.play()
+
+    if (timeOver) {
+      timesOver()
       return;
     }
 
-    focusTimer.temporizador()
+    focusTimer.countdown()
     updateTimer();
 
-    contagemRegressiva();
+    countdown();
   }, 1000);
 }
 
