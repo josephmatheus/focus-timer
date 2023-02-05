@@ -1,8 +1,71 @@
-.hidden {
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(235, 235, 235);
+}
+
+.timer-container {
+    background-color: rgb(250, 150, 150);
+    max-width: 90%;
+    width: 450px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0) 0px 25px 20px -20px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.timer-container .timer {
+    margin-bottom: 16px;
+}
+
+.timer-container .timer .time {
+    font-size: 96px;
+    font-weight: 500;
+}
+
+.timer-container .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2%;
+}
+
+.timer-container .buttons .button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 24px;
+    margin: 0 8px;
+    font-size: 18px;
+    border: 1px solid black;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px, rgba(0, 0, 0, 0.2) 0px 7px 13px -3px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
+    background-color: rgb(250, 210, 210);
+}
+
+.timer-container .buttons .button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.timer-container .buttons .button:active {
+    transform: scale(0.95);
+}
+
+.timer-container .buttons .hidden {
     display: none;
 }
 
 .not-active {
     pointer-events: none;
     cursor: none;
+    opacity: .5;
 }
