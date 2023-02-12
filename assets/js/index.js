@@ -25,7 +25,7 @@ const focusTimer = {
     if (this.workTime.minutes == 60) {
       return;
     } else {
-      this.workTime.minutes += 5;
+      this.workTime.minutes++;
     }
     return this.workTime.minutes;
   },
@@ -34,7 +34,7 @@ const focusTimer = {
     if (this.workTime.minutes == 0) {
       return;
     } else {
-      this.workTime.minutes -= 5;
+      this.workTime.minutes--;
     }
     return this.workTime.minutes;
   },
