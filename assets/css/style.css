@@ -64,6 +64,18 @@ body {
     display: none;
 }
 
+.timer-container .controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.timer-container .controls input {
+    width: 40px;
+    text-align: center;
+}
+
 .not-active {
     pointer-events: none;
     cursor: none;

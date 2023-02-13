@@ -6,51 +6,63 @@ const stopBtn = document.getElementById("stop-btn");
 const plusBtn = document.getElementById("plus-btn");
 const minusBtn = document.getElementById("minus-btn");
 
-const focusSound = new Audio("./assets/sounds/focus-sound.mp3")
-focusSound.loop = true
-focusSound.volume = 0.5
+const totalCycles = document.getElementById("total-cycles");
+const shortPause = document.getElementById("short-pause-time");
+const longPause = document.getElementById("long-pause-time");
 
-const timerStartSound = new Audio("./assets/sounds/timer-start.mp3")
-const timerEndSound = new Audio("./assets/sounds/timer-ends.mp3")
+const focusSound = new Audio("./assets/sounds/focus-sound.mp3");
+focusSound.loop = true;
+focusSound.volume = 0.5;
+
+const timerStartSound = new Audio("./assets/sounds/timer-start.mp3");
+const timerEndSound = new Audio("./assets/sounds/timer-ends.mp3");
 
 let interval;
 
 const focusTimer = {
-  workTime: {
-    minutes: 25,
-    seconds: 0,
+  minutes: 0,
+  seconds: 3,
+  cycles: 0,
+  shortPause: 0,
+  longPause: 0,
+  totalCycles: 0,
+
+  setCyclesAndPauses() {
+    this.totalCycles = totalCycles.value;
+    this.shortPause = shortPause.value;
+    this.longPause = longPause.value;
   },
 
   addMinutes() {
-    if (this.workTime.minutes == 60) {
+    if (this.minutes == 60) {
       return;
     } else {
-      this.workTime.minutes++;
+      this.minutes++;
     }
-    return this.workTime.minutes;
+    return this.minutes;
   },
 
   removeMinutes() {
-    if (this.workTime.minutes == 0) {
+    if (this.minutes == 0) {
       return;
     } else {
-      this.workTime.minutes--;
+      this.minutes--;
     }
-    return this.workTime.minutes;
+    return this.minutes;
   },
 
   countdown() {
-    if (this.workTime.seconds == 0) {
-      this.workTime.seconds = 60;
-      this.workTime.minutes--;
+    if (this.seconds == 0) {
+      this.seconds = 60;
+      this.minutes--;
     }
-    this.workTime.seconds--;
+    this.seconds--;
   },
 };
 
 function updateTimer() {
-  minutes.innerHTML = focusTimer.workTime.minutes.toString().padStart("2", 0);
-  seconds.innerHTML = focusTimer.workTime.seconds.toString().padStart("2", 0);
+  minutes.innerHTML = focusTimer.minutes.toString().padStart("2", 0);
+  seconds.innerHTML = focusTimer.seconds.toString().padStart("2", 0);
 }
 
 plusBtn.addEventListener("click", () => {
@@ -64,20 +76,21 @@ minusBtn.addEventListener("click", () => {
 });
 
 playBtn.addEventListener("click", () => {
+  focusTimer.setCyclesAndPauses;
   pauseBtn.classList.remove("hidden");
   playBtn.classList.add("hidden");
   plusBtn.classList.add("not-active");
   minusBtn.classList.add("not-active");
-  timerStartSound.play()
-  countdown();
-  focusSound.play()
+  timerStartSound.play();
+  startFocusTime();
+  focusSound.play();
 });
 
 pauseBtn.addEventListener("click", () => {
   pauseBtn.classList.toggle("hidden");
   playBtn.classList.toggle("hidden");
   clearTimeout(interval);
-  focusSound.pause()
+  focusSound.pause();
 });
 
 stopBtn.addEventListener("click", () => {
@@ -85,45 +98,45 @@ stopBtn.addEventListener("click", () => {
   playBtn.classList.remove("hidden");
   plusBtn.classList.remove("not-active");
   minusBtn.classList.remove("not-active");
-  setTimeToZero()
-  stopFocusSound()
+  setTimeToZero();
+  stopFocusSound();
   updateTimer();
 });
 
 function setTimeToZero() {
-  focusTimer.workTime.minutes = 0;
-  focusTimer.workTime.seconds = 0;
+  focusTimer.minutes = 0;
+  focusTimer.seconds = 0;
 }
 
 function stopFocusSound() {
-  focusSound.pause()
-  focusSound.currentTime = 0
+  focusSound.pause();
+  focusSound.currentTime = 0;
 }
 
-function timesOver(){
+function timesOver() {
   playBtn.classList.remove("hidden");
   pauseBtn.classList.add("hidden");
   plusBtn.classList.remove("not-active");
   minusBtn.classList.remove("not-active");
-  stopFocusSound()
-  timerEndSound.play()
+  stopFocusSound();
+  timerEndSound.play();
 }
 
-function countdown() {
+function startFocusTime() {
   interval = setTimeout(() => {
-    let timeOver = focusTimer.workTime.minutes <= 0 && focusTimer.workTime.seconds <= 0;
+    let timeOver = focusTimer.minutes <= 0 && focusTimer.seconds <= 0;
 
     updateTimer();
 
     if (timeOver) {
-      timesOver()
-      return;
+      timesOver();
+        return;
     }
 
-    focusTimer.countdown()
+    focusTimer.countdown();
     updateTimer();
 
-    countdown();
+    startFocusTime();
   }, 1000);
 }
 
